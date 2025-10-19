@@ -29,6 +29,8 @@
     "zod": "4.1.12"
   },
   "devDependencies": {
+    "@commitlint/cli": "20.1.0",
+    "@commitlint/config-conventional": "20.0.0",
     "@eslint/js": "9.38.0",
     "@nestjs/cli": "11.0.10",
     "@nestjs/schematics": "11.0.9",
