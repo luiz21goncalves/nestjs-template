@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { envSchema } from './env'
 import { HealthModule } from './health/health.module'
 
 @Module({
-  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({
       envFilePath: [`.env.${process.env.NODE_ENV}`],
@@ -19,6 +16,5 @@ import { HealthModule } from './health/health.module'
     }),
     HealthModule,
   ],
-  providers: [AppService],
 })
 export class AppModule {}
