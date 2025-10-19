@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { envSchema } from './env'
+import { HealthModule } from './health/health.module'
 
 @Module({
   controllers: [AppController],
@@ -16,6 +17,7 @@ import { envSchema } from './env'
         return envSchema.parse(config)
       },
     }),
+    HealthModule,
   ],
   providers: [AppService],
 })
