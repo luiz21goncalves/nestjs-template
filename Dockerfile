@@ -8,7 +8,7 @@ RUN corepack enable
 COPY . .
 
 FROM builder-base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile --ignore-scripts
 
 
 FROM builder-base AS build
