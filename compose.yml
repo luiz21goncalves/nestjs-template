@@ -11,8 +11,12 @@ services:
     ports:
       - 3333:3333
     user: node
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: '512MB'
+
+  jaeger:
+      image: jaegertracing/all-in-one:latest
+      ports:
+        - 16686:16686
+        - 4318:4318
+        - 4317:4317
+      environment:
+        - LOG_LEVEL=debug
