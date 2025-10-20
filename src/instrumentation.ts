@@ -11,8 +11,6 @@ import {
   ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions'
 
-console.log(process.env.OTEL_TRACER_EXPORTER_URL)
-
 export const tracing = new NodeSDK({
   instrumentations: [
     getNodeAutoInstrumentations(),
@@ -27,7 +25,7 @@ export const tracing = new NodeSDK({
   spanProcessor: new BatchSpanProcessor(
     new OTLPTraceExporter({
       headers: {
-        Authorization: `Bearer ${process.env.OTEL_TRACER_EXPORTER_TOKEN}`,
+        Authorization: `Bearer ${process.env.OTEL_TRACE_EXPORTER_TOKEN}`,
       },
       url: process.env.OTEL_TRACE_EXPORTER_URL,
     })
