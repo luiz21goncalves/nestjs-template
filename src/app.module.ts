@@ -1,8 +1,9 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_INTERCEPTOR } from '@nestjs/core'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { envSchema } from './env'
+import { Env, envSchema } from './env'
 import { HealthModule } from './health/health.module'
 
 @Module({
@@ -16,6 +17,21 @@ import { HealthModule } from './health/health.module'
       },
     }),
     HealthModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService<Env, true>) => {
+        return {
+          database: configService.get('POSTGRES_DB'),
+          entities: [],
+          host: configService.get('POSTGRES_HOST'),
+          password: configService.get('POSTGRES_PASSWORD'),
+          port: configService.get('POSTGRES_PORT'),
+          type: 'postgres',
+          username: configService.get('POSTGRES_USER'),
+        }
+      },
+    }),
   ],
   providers: [
     {

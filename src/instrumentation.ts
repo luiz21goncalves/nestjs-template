@@ -3,6 +3,7 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express'
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http'
 import { NestInstrumentation } from '@opentelemetry/instrumentation-nestjs-core'
+import { PgInstrumentation } from '@opentelemetry/instrumentation-pg'
 import { resourceFromAttributes } from '@opentelemetry/resources'
 import { NodeSDK } from '@opentelemetry/sdk-node'
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node'
@@ -17,6 +18,7 @@ export const tracing = new NodeSDK({
     new HttpInstrumentation(),
     new ExpressInstrumentation(),
     new NestInstrumentation(),
+    new PgInstrumentation(),
   ],
   resource: resourceFromAttributes({
     [ATTR_SERVICE_NAME]: 'nestjs-template',
