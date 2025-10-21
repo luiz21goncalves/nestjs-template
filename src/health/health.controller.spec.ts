@@ -17,9 +17,9 @@ describe('HealthController (e2e)', () => {
 
     expect(response.statusCode).toEqual(HttpStatus.OK)
     expect(response.body).toStrictEqual({
-      details: {},
+      details: { database: { status: 'up' } },
       error: {},
-      info: {},
+      info: { database: { status: 'up' } },
       status: 'ok',
     })
   })
