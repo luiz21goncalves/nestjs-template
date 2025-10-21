@@ -5,7 +5,7 @@
   "author": "Luiz Gonçalves <luizhbgoncalves@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.19.0",
   "scripts": {
     "build": "nest build",
     "start": "nest start",
