@@ -27,6 +27,7 @@ import { HealthModule } from './health/health.module'
           host: configService.get('POSTGRES_HOST'),
           password: configService.get('POSTGRES_PASSWORD'),
           port: configService.get('POSTGRES_PORT'),
+          ssl: configService.get('NODE_ENV') === 'production',
           type: 'postgres',
           username: configService.get('POSTGRES_USER'),
         }
