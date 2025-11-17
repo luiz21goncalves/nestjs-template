@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { DrizzleModule } from './drizzle/drizzle.module'
 import { Env, envSchema } from './env'
 import { HealthModule } from './health/health.module'
 
@@ -33,6 +34,7 @@ import { HealthModule } from './health/health.module'
         }
       },
     }),
+    DrizzleModule,
   ],
   providers: [
     {
