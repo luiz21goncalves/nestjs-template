@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
+import drizzle from 'eslint-plugin-drizzle'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import globals from 'globals'
@@ -29,6 +30,14 @@ export default defineConfig([
     rules: {
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
+    },
+  },
+  {
+    plugins: {
+      drizzle,
+    },
+    rules: {
+      ...drizzle.configs.all.rules,
     },
   },
   tseslint.configs.recommended,

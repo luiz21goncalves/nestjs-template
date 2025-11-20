@@ -1,3 +1,4 @@
+import { ValidationPipe, VersioningType } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 
 import { AppModule } from '@/app.module'
@@ -7,5 +8,10 @@ export async function createApp() {
     imports: [AppModule],
   }).compile()
 
-  return moduleFixture.createNestApplication()
+  const app = moduleFixture.createNestApplication({ logger: false })
+
+  app.enableVersioning({ type: VersioningType.URI })
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
+
+  return app
 }

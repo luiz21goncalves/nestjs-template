@@ -24,7 +24,6 @@ services:
       - 5432:5432
     network_mode: host
 
-
   jaeger:
       image: jaegertracing/all-in-one:latest
       ports:
