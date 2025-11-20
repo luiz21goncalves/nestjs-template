@@ -1,10 +1,8 @@
 import { randomUUID } from 'node:crypto'
-import path from 'node:path'
 
 import dotenv from 'dotenv'
 import dotEnvExpand from 'dotenv-expand'
 import { drizzle } from 'drizzle-orm/node-postgres'
-import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { Environment } from 'vitest/environments'
 
 dotEnvExpand.expand(
@@ -32,13 +30,8 @@ export default <Environment>{
     const schema = randomUUID()
     const databaseUrl = generateDatabaseUrl(schema)
 
-    const db = drizzle(databaseUrl)
-
     process.env.DATABASE_URL = databaseUrl
-
-    await migrate(db, {
-      migrationsFolder: path.resolve(path.dirname('.'), 'drizzle'),
-    })
+    const db = drizzle(databaseUrl)
 
     return {
       async teardown() {

@@ -1,6 +1,9 @@
+import path from 'node:path'
+
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres'
+import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { Pool } from 'pg'
 
 import { Env } from '@/env'
@@ -15,8 +18,12 @@ export class DrizzleService implements OnModuleInit, OnModuleDestroy {
 
   constructor(private readonly configService: ConfigService<Env, true>) {}
 
-  onModuleInit() {
+  async onModuleInit() {
     const db = drizzle(this.configService.get('DATABASE_URL'), { schema })
+
+    const migrationsFolder = path.resolve(__dirname, '..', '..', 'drizzle')
+    await migrate(db, { migrationsFolder })
+
     this._drizzle = db
   }
 
