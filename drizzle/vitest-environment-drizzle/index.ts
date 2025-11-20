@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 import dotenv from 'dotenv'
 import dotEnvExpand from 'dotenv-expand'
-import { drizzle } from 'drizzle-orm/node-postgres'
+import { Client } from 'pg'
 import { Environment } from 'vitest/environments'
 
 dotEnvExpand.expand(
@@ -12,32 +12,26 @@ dotEnvExpand.expand(
   })
 )
 
-function generateDatabaseUrl(schema: string) {
-  if (!process.env.DATABASE_URL) {
-    throw new Error('Please provide a DATABASE_URL environment variable.')
-  }
-
-  const url = new URL(process.env.DATABASE_URL)
-
-  url.searchParams.set('schema', schema)
-
-  return url.toString()
-}
-
 export default <Environment>{
   name: 'drizzle',
   async setup() {
-    const schema = randomUUID()
-    const databaseUrl = generateDatabaseUrl(schema)
+    if (!process.env.DATABASE_URL) {
+      throw new Error('Please provide a DATABASE_URL environment variable.')
+    }
 
-    process.env.DATABASE_URL = databaseUrl
-    const db = drizzle(databaseUrl)
+    const client = new Client(process.env.DATABASE_URL)
+    await client.connect()
+
+    const url = new URL(process.env.DATABASE_URL)
+    const databaseName = randomUUID()
+    url.pathname = databaseName
+    process.env.DATABASE_URL = url.toString()
+
+    await client.query(`CREATE DATABASE "${databaseName}"`)
 
     return {
       async teardown() {
-        await db.execute(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
-
-        await db.$client.end()
+        await client.end()
       },
     }
   },
