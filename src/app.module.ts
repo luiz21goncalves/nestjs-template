@@ -1,9 +1,10 @@
 import { ClassSerializerInterceptor, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { APP_INTERCEPTOR } from '@nestjs/core'
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
 import { DrizzleModule } from './drizzle/drizzle.module'
 import { envSchema } from './env'
+import { ErrorsFilter } from './errors/errors.filter'
 import { HealthModule } from './health/health.module'
 
 @Module({
@@ -23,6 +24,10 @@ import { HealthModule } from './health/health.module'
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ErrorsFilter,
     },
   ],
 })
