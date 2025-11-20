@@ -1,5 +1,4 @@
 import { HttpStatus } from '@nestjs/common'
-import { ApiProperty } from '@nestjs/swagger'
 
 type AppErrorProps<TDetails = unknown> = {
   name: string
@@ -36,18 +35,6 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-  @ApiProperty({ default: 'ValidationError' })
-  name: string
-
-  @ApiProperty()
-  message: string
-
-  @ApiProperty({ default: HttpStatus.BAD_REQUEST })
-  status_code: number
-
-  @ApiProperty()
-  details: string[]
-
   constructor({ cause, details }: Pick<AppErrorProps, 'cause' | 'details'>) {
     super({
       cause,
@@ -60,15 +47,6 @@ export class ValidationError extends AppError {
 }
 
 export class NotFoundError extends AppError {
-  @ApiProperty({ default: 'NotFoundError' })
-  name: string
-
-  @ApiProperty()
-  message: string
-
-  @ApiProperty({ default: HttpStatus.NOT_FOUND })
-  status_code: number
-
   constructor({ cause, message }: Pick<AppErrorProps, 'cause' | 'message'>) {
     super({
       cause,
@@ -80,18 +58,6 @@ export class NotFoundError extends AppError {
 }
 
 export class ConflictError extends AppError {
-  @ApiProperty({ default: 'ConflictError' })
-  name: string
-
-  @ApiProperty()
-  message: string
-
-  @ApiProperty({ default: HttpStatus.CONFLICT })
-  status_code: number
-
-  @ApiProperty({ required: false })
-  details?: Record<string, unknown>
-
   constructor({
     cause,
     message,
@@ -108,15 +74,6 @@ export class ConflictError extends AppError {
 }
 
 export class InternalServerError extends AppError {
-  @ApiProperty({ default: 'InternalServerError' })
-  name: string
-
-  @ApiProperty()
-  message: string
-
-  @ApiProperty({ default: HttpStatus.INTERNAL_SERVER_ERROR })
-  status_code: number
-
   constructor({ cause }: Pick<AppErrorProps, 'cause'>) {
     super({
       cause,
