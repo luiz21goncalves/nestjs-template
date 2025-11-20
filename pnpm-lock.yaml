@@ -186,6 +186,9 @@ importers:
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/node@24.8.1)(jiti@2.6.1)(terser@5.44.0)(yaml@2.8.1)
+      vitest-environment-drizzle:
+        specifier: link:drizzle/vitest-environment-drizzle
+        version: link:drizzle/vitest-environment-drizzle
 
 packages:
 

@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto'
-
 import swc from 'unplugin-swc'
 import tsConfigPaths from 'vite-tsconfig-paths'
 import { defaultExclude, defineConfig } from 'vitest/config'
@@ -15,14 +13,12 @@ export default defineConfig({
         'src/instrumentation.ts',
         'src/main.ts',
         'src/errors/schemas.ts',
+        'drizzle/vitest-environment-drizzle',
       ],
       reporter: ['text-summary', 'lcov'],
     },
-    env: {
-      DATABASE_URL: `postgres://docker:docker@localhost:5432/nestjs-template?schema=${randomUUID()}`,
-    },
+    environment: 'drizzle',
     globals: false,
     root: './',
-    setupFiles: ['./vitest.setup.ts'],
   },
 })
