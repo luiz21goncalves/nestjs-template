@@ -7,7 +7,7 @@ import { Environment } from 'vitest/environments'
 
 dotEnvExpand.expand(
   dotenv.config({
-    path: ['.env', `.env.${process.env.NODE_ENV}`],
+    path: ['.env.development'],
     quiet: true,
   })
 )
