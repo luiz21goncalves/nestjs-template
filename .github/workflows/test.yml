@@ -16,7 +16,7 @@ jobs:
       - name: install pnpm
         uses: pnpm/action-setup@v4
         with:
-          versions: 10.19.0
+          version: 10.19.0
 
       - name: setup node
         uses: actions/setup-node@v4
