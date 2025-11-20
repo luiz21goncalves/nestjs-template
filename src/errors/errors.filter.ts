@@ -4,6 +4,7 @@ import {
   Catch,
   ExceptionFilter,
   NotFoundException,
+  ServiceUnavailableException,
 } from '@nestjs/common'
 import { HttpAdapterHost } from '@nestjs/core'
 
@@ -54,8 +55,20 @@ export class ErrorsFilter<T> implements ExceptionFilter {
 
     const ctx = host.switchToHttp()
 
-    const responseBody = formatResponseBody(exception)
+    if (exception instanceof ServiceUnavailableException) {
+      httpAdapter.reply(
+        ctx.getResponse(),
+        exception.getResponse(),
+        exception.getStatus()
+      )
+    } else {
+      const responseBody = formatResponseBody(exception)
 
-    httpAdapter.reply(ctx.getResponse(), responseBody, responseBody.status_code)
+      httpAdapter.reply(
+        ctx.getResponse(),
+        responseBody,
+        responseBody.status_code
+      )
+    }
   }
 }
