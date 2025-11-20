@@ -10,6 +10,9 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v4
 
+      - name: start containers
+        run: docker compose up --no-deps postgres -d
+
       - name: install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -21,11 +24,18 @@ jobs:
           node-version: 22.20.0
           cache: 'pnpm'
 
+      - name: cache node_modules
+        uses: actions/cache@v4
+        id: pnpm-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+        if: steps.pnpm-cache.outputs.cache-hit != 'true'
       - name: install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: start containers
-        run: docker compose up --no-deps postgres -d
 
       - name: run test
         run: pnpm run test
