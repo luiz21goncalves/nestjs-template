@@ -13,14 +13,7 @@ export default defineConfig([
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: { globals: globals.node },
     plugins: { js },
-    rules: {
-      'no-magic-numbers': 'error',
-      'sort-keys': [
-        'error',
-        'asc',
-        { caseSensitive: true, minKeys: 2, natural: false },
-      ],
-    },
+    rules: { 'no-magic-numbers': 'error' },
   },
   globalIgnores(['dist']),
   {
